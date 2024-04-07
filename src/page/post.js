@@ -28,6 +28,7 @@ useEffect(() => {
   const submit = async () => {
     try {
       const info = {
+        date: new Date().toISOString(),
         title: title,
         pic: pic,
         detial: detial,
@@ -36,6 +37,7 @@ useEffect(() => {
       if (response.data === "success") {
         console.log("success");
         resetForm();
+        fetchPost();
       } else {
         console.log("fail");
       }
@@ -114,6 +116,7 @@ useEffect(() => {
           <table className="table text-center ">
             <thead>
               <tr>
+                <th scope="col">Date</th>
                 <th scope="col">Title</th>
                 <th scope="col">Pic</th>
                 <th scope="col">Detial</th>
@@ -123,6 +126,7 @@ useEffect(() => {
               {posts &&
                 posts.map((post, index) => (
                   <tr key={index}>
+                    <td>{new Date().toLocaleDateString()}</td>
                     <td>{post.title}</td>
                     <td>{post.pic}</td>
                     <td>{post.detial}</td>
@@ -132,7 +136,7 @@ useEffect(() => {
                         className="btn btn-danger"
                       >
                         Delete
-                      </button>
+                      </button>                      
                     </td>
                   </tr>
                 ))}
@@ -145,3 +149,6 @@ useEffect(() => {
 }
 
 export default Post;
+
+
+
