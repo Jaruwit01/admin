@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
@@ -9,17 +8,15 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/users', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const Mongoose = require("mongoose")
+const connect = Mongoose.connect('mongodb+srv://admin:Admin@emer-project.ahhfnfg.mongodb.net/emerproject?retryWrites=true&w=majority&appName=EMER-Project');
+console.log("Database is connected successfully!");
+// const db = mongoose.connection;
 
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('Connected to MongoDB');
-});
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', () => {
+//   console.log('Connected to MongoDB');
+// });
 
 // Routes
 const userRouter = require('./routes/userRoute');

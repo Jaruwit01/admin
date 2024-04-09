@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     element: <User />
   },
   {
-    path: "/Post",
+    path: "/posts",
     element: <Post/>
   },
   {
