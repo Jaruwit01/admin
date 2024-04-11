@@ -3,37 +3,37 @@ import Plot from "react-plotly.js";
 import Navbar from "../components/navbar";
 
 function Dashboard() {
-  const data = [
+  const otherData = [
     {
-      x: [1, 2, 3, 4, 5],
-      y: [10, 15, 13, 17, 20],
-      type: "scatter",
-      mode: "lines+markers",
-      marker: { color: "blue" },
+      x: ["January", "February", "March", "April", "May", "June", "July"],
+      y: [100, 120, 90, 150, 130, 133, 90],
+      type: "line",
+      marker: { color: "green" },
     },
   ];
 
-  const layout = {
-    title: "Sales Statistics",
+  const otherLayout = {
+    title: "Charging Requests per Month",
     xaxis: { title: "Month" },
-    yaxis: { title: "Sales Amount" },
+    yaxis: { title: "Charging Requests" },
   };
 
   return (
     <div>
       <Navbar />
-    <div className="container mt-5">
-      <h1>Dashboard</h1>
-      <div className="row">
-        <div className="col-md-6">
-          <Plot data={data} layout={layout} />
-        </div>
-        <div className="col-md-6">
-          <h3>Other Statistics</h3>
-          {/* เพิ่มส่วนอื่น ๆ ของสถิติตามที่ต้องการ */}
+      <div className="container mt-5">
+        <h1 className="text-center mb-4">Dashboard</h1>
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div className="card">
+              <div className="card-body">
+                <h3 className="card-title">Charging Requests Statistics</h3>
+                <Plot data={otherData} layout={otherLayout} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

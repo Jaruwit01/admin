@@ -4,34 +4,72 @@ import User from "./page/user.js";
 import Post from "./page/post.js";
 import Navbar from "./components/navbar.js";
 import Dashboard from './page/dashboard.js';
+// import Login from './page/Login.js';
+// import { AuthProvider } from './page/authContext.js';
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 
-const router = createBrowserRouter([
+// const router = createBrowserRouter([
   
+//   {
+//     path: "/User",
+//     element: <User />
+//   },
+//   {
+//     path: "/posts",
+//     element: <Post/>
+//   },
+//   {
+//     path: "/navbar",
+//     element: <Navbar/>
+//   },
+//   {
+//     path: "/dashboard",
+//     element: <Dashboard/>
+//   }
+//   ,
+//   {
+//     path: "/",
+//     element: <Login/>
+//   }
+// ])
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <React.StrictMode>
+//     <RouterProvider router={router}>
+    
+//     </RouterProvider>
+//   </React.StrictMode>
+// )
+const router = createBrowserRouter([
   {
     path: "/",
     element: <User />
   },
   {
-    path: "/posts",
-    element: <Post/>
+    path: "/Post",
+    element: <Post />
   },
   {
     path: "/navbar",
-    element: <Navbar/>
+    element: <Navbar />
   },
   {
     path: "/dashboard",
-    element: <Dashboard/>
-  }
-])
+    element: <Dashboard />
+  },
+  // {
+  //   path: "/",
+  //   element: <Login />
+  // }
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router}>
     </RouterProvider>
   </React.StrictMode>
-)
+);

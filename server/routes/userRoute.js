@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler'); // Import express-async-h
 const User = require('../models/Usermodel');
 
 // GET all users
-router.get('/users', asyncHandler(async (req, res) => {
+router.get('/', asyncHandler(async (req, res) => {
   const users = await User.find();
   res.json({ data: users });
 }));
