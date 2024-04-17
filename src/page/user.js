@@ -33,9 +33,10 @@ function User() {
           <table className="table text-center ">
             <thead>
               <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phonenumber</th>
+                <th scope="col">Date of Birth</th>
               </tr>
             </thead>
             <tbody>
@@ -43,9 +44,10 @@ function User() {
               {user &&
                 user.map((user, index) => (
                   <tr key={index}>
-                    <td>{user.username}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
+                    <td>{user.Email}</td>
+                    <td>{user.Name}</td>
+                    <td>{user.Phonenumber}</td>
+                    <td>{user.DateofBirth}</td>
                   </tr>
                 ))}
             </tbody>
