@@ -1,64 +1,151 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar";
+import { getStorage } from "../config/firebaseConfig";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
+// function Post() {
+//   const [title, setTitle] = useState("");
+//   const [pic, setPic] = useState("");
+//   const [detial, setDetial] = useState("");
+//   const [posts, setPosts] = useState([]);
+//   const [check, setCheck] = useState(false);
+//   const fetchPost = async () => {
+//     try {
+//         const response = await axios.get("http://localhost:4000/posts");
+//         setPosts(response.data.data);
+//         console.log(response.data);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// };
+// useEffect(() => {
+//     if (!check) {
+//         fetchPost();
+//         setCheck(true);
+//     }
+// }, [check]);
+
+//   const submit = async () => {
+//     try {
+//       const info = {
+//         date: new Date().toISOString(),
+//         title: title,
+//         pic: pic,
+//         detial: detial,
+//       };
+//       const response = await axios.post("http://localhost:4000/posts", info);
+//       if (response.data === "success") {
+//         console.log("success");
+//         resetForm();
+//         fetchPost();
+//       } else {
+//         console.log("fail");
+//       }
+//     } catch (error) {
+//       console.log(error, "createInformation");
+//     }
+//   };
+//   const resetForm = () => {
+//     setTitle("");
+//     setPic("");
+//     setDetial("");
+//   };
+//   const deletePost = async (postId) => {
+//     try {
+//       const response = await axios.delete(`http://localhost:4000/posts/${postId}`);
+//       console.log(response.data);
+//       fetchPost(); // Fetch posts after successful deletion
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 function Post() {
-  const [title, setTitle] = useState("");
-  const [pic, setPic] = useState("");
-  const [detial, setDetial] = useState("");
+  const [title, setTitle] = useState('');
+  const [pic, setPic] = useState('');
+  const [detail, setDetail] = useState('');
   const [posts, setPosts] = useState([]);
   const [check, setCheck] = useState(false);
+  const fileInputRef = useRef(null);
+
+  // Fetch posts from MongoDB
   const fetchPost = async () => {
     try {
-        const response = await axios.get("http://localhost:4000/posts");
-        setPosts(response.data.data);
-        console.log(response.data);
+      const response = await axios.get('http://localhost:4000/posts');
+      setPosts(response.data.data);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
-useEffect(() => {
+  };
+
+  useEffect(() => {
     if (!check) {
-        fetchPost();
-        setCheck(true);
+      fetchPost();
+      setCheck(true);
     }
-}, [check]);
+  }, [check]);
 
   const submit = async () => {
     try {
-      const info = {
-        date: new Date().toISOString(),
-        title: title,
-        pic: pic,
-        detial: detial,
-      };
-      const response = await axios.post("http://localhost:4000/posts", info);
-      if (response.data === "success") {
-        console.log("success");
-        resetForm();
-        fetchPost();
-      } else {
-        console.log("fail");
+      if (!pic) {
+        console.log('Please select a file.');
+        return;
       }
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${pic.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, pic);
+  
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // progress function
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.error(error);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          const info = {
+            date: new Date().toISOString(),
+            title: title,
+            pic: downloadURL, // use the download URL from Firebase Storage
+            detail: detail,
+          };
+          const response = await axios.post('http://localhost:4000/posts', info);
+          if (response.data === 'success') {
+            resetForm();
+            fetchPost();
+          } else {
+            console.log('Fail');
+          }
+        }
+      );
     } catch (error) {
-      console.log(error, "createInformation");
+      console.error(error);
     }
   };
+
   const resetForm = () => {
-    setTitle("");
-    setPic("");
-    setDetial("");
+    setTitle('');
+    setDetail('');
+    setPic('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Reset file input value to empty string
+    }
   };
+
   const deletePost = async (postId) => {
     try {
       const response = await axios.delete(`http://localhost:4000/posts/${postId}`);
-      console.log(response.data);
       fetchPost(); // Fetch posts after successful deletion
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <div>
       <Navbar />
@@ -79,26 +166,26 @@ useEffect(() => {
           </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
-              Title
+              Picture
             </label>
             <input
+              ref={fileInputRef}
               className="form-control"
               type="file"
               placeholder="pic"
-              value={pic}
-              onChange={(e) => setPic(e.target.value)}
+              onChange={(e) => setPic(e.target.files[0])} // ใช้ e.target.files[0] เพื่อดึงไฟล์ที่ผู้ใช้เลือก
             />
           </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
-              Title
+              Detail
             </label>
             <input
               className="form-control"
               type="text"
-              placeholder="detial"
-              value={detial}
-              onChange={(e) => setDetial(e.target.value)}
+              placeholder="detail"
+              value={detail}
+              onChange={(e) => setDetail(e.target.value)}
             />
           </div>
         </form>
@@ -149,6 +236,3 @@ useEffect(() => {
 }
 
 export default Post;
-
-
-

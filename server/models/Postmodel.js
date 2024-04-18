@@ -6,10 +6,6 @@ let PostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    pic: {
-        type: String,
-        required: true,
-    },
     detial: {
         type: String,
         required: true,

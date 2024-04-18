@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/storage": "^0.12.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,6 +13,7 @@
     "bootstrap-icons": "^1.11.3",
     "cors": "^2.8.5",
     "express-async-handler": "^1.2.0",
+    "firebase": "^10.11.0",
     "mongoose": "^8.3.0",
     "plotly.js": "^2.30.1",
     "react": "^18.2.0",
