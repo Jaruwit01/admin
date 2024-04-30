@@ -6,7 +6,7 @@ let PostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    detial: {
+    detail: {
         type: String,
         required: true,
     },

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar";
-import { getStorage } from "../config/firebaseConfig";
+import { storage } from "../config/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 // function Post() {
@@ -92,7 +92,7 @@ function Post() {
         console.log('Please select a file.');
         return;
       }
-      const storage = getStorage();
+
       const storageRef = ref(storage, `images/${pic.name}`);
       const uploadTask = uploadBytesResumable(storageRef, pic);
   
@@ -114,6 +114,7 @@ function Post() {
             pic: downloadURL, // use the download URL from Firebase Storage
             detail: detail,
           };
+          console.log(info);
           const response = await axios.post('http://localhost:4000/posts', info);
           if (response.data === 'success') {
             resetForm();
@@ -215,8 +216,11 @@ function Post() {
                   <tr key={index}>
                     <td>{new Date().toLocaleDateString()}</td>
                     <td>{post.title}</td>
-                    <td>{post.pic}</td>
-                    <td>{post.detial}</td>
+                    {/* showe link img from fireabase */}
+                    <td>
+                      <img src={post.pic} alt="pic" style={{ width: '100px' }} />
+                    </td>
+                    <td>{post.detail}</td>
                     <td>
                       <button
                         onClick={() => deletePost(post._id)}

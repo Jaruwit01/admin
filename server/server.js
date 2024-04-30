@@ -12,7 +12,8 @@ app.use(express.json());
 // const connect = Mongoose.connect('mongodb+srv://admin:Admin@emer-project.ahhfnfg.mongodb.net/emerproject?retryWrites=true&w=majority&appName=EMER-Project');
 
 
-mongoose.connect('mongodb+srv://admin:Admin@emer-project.ahhfnfg.mongodb.net/emerproject?retryWrites=true&w=majority&appName=EMER-Project');
+// mongoose.connect('mongodb+srv://admin:Admin@emer-project.ahhfnfg.mongodb.net/emerproject?retryWrites=true&w=majority&appName=EMER-Project');
+mongoose.connect('mongodb://localhost:27017/users');
 
 const db = mongoose.connection;
 
