@@ -4,63 +4,6 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 import { storage } from "../config/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
-// function Post() {
-//   const [title, setTitle] = useState("");
-//   const [pic, setPic] = useState("");
-//   const [detial, setDetial] = useState("");
-//   const [posts, setPosts] = useState([]);
-//   const [check, setCheck] = useState(false);
-//   const fetchPost = async () => {
-//     try {
-//         const response = await axios.get("http://localhost:4000/posts");
-//         setPosts(response.data.data);
-//         console.log(response.data);
-//     } catch (error) {
-//         console.error(error);
-//     }
-// };
-// useEffect(() => {
-//     if (!check) {
-//         fetchPost();
-//         setCheck(true);
-//     }
-// }, [check]);
-
-//   const submit = async () => {
-//     try {
-//       const info = {
-//         date: new Date().toISOString(),
-//         title: title,
-//         pic: pic,
-//         detial: detial,
-//       };
-//       const response = await axios.post("http://localhost:4000/posts", info);
-//       if (response.data === "success") {
-//         console.log("success");
-//         resetForm();
-//         fetchPost();
-//       } else {
-//         console.log("fail");
-//       }
-//     } catch (error) {
-//       console.log(error, "createInformation");
-//     }
-//   };
-//   const resetForm = () => {
-//     setTitle("");
-//     setPic("");
-//     setDetial("");
-//   };
-//   const deletePost = async (postId) => {
-//     try {
-//       const response = await axios.delete(`http://localhost:4000/posts/${postId}`);
-//       console.log(response.data);
-//       fetchPost(); // Fetch posts after successful deletion
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
 function Post() {
   const [title, setTitle] = useState('');
   const [pic, setPic] = useState('');
