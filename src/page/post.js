@@ -137,7 +137,7 @@ function Post() {
             >
               <option value="">Select Type</option>
               <option value="main">Main</option>
-              <option value="E_MER">E_MER</option>
+              <option value="E-MER">E-MER</option>
               <option value="Activities">Activities</option>
             </select>
           </div>
@@ -183,9 +183,9 @@ function Post() {
                     <td className="text-start">{post.title}</td>
 
                     <td>
-                      <img src={post.pic} alt="pic" style={{ width: '100px' }} />
+                      <img src={post.urlpic} alt="pic" style={{ width: '60px' }} />
                     </td>
-                    <td>{post.detail.slice(0, 10)}</td>
+                    <td>{post.detail.slice(0, 20)}</td>
                     <td>
                       {post.type}
                     </td>
