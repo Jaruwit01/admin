@@ -1,9 +1,9 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import { storage } from "../config/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 function Post() {
   const [title, setTitle] = useState('');
   const [pic, setPic] = useState('');
@@ -11,6 +11,8 @@ function Post() {
   const [posts, setPosts] = useState([]);
   const [check, setCheck] = useState(false);
   const fileInputRef = useRef(null);
+  const [type, setType] = useState('');
+  const [urlpic, setUrlpic] = useState(''); // Remove urlpic state [1/2
 
   // Fetch posts from MongoDB
   const fetchPost = async () => {
@@ -36,9 +38,10 @@ function Post() {
         return;
       }
 
+      // Rename the file to match the title
       const storageRef = ref(storage, `images_blog/${pic.name}`);
       const uploadTask = uploadBytesResumable(storageRef, pic);
-  
+
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -56,6 +59,8 @@ function Post() {
             title: title,
             pic: downloadURL, // use the download URL from Firebase Storage
             detail: detail,
+            type: type, // Include the selected type
+            urlpic: downloadURL, // Include the download URL in the request body [2/2]
           };
           console.log(info);
           const response = await axios.post('http://localhost:4000/posts', info);
@@ -76,6 +81,7 @@ function Post() {
     setTitle('');
     setDetail('');
     setPic('');
+    setType(''); // Reset type to empty string
     if (fileInputRef.current) {
       fileInputRef.current.value = ''; // Reset file input value to empty string
     }
@@ -121,6 +127,21 @@ function Post() {
             />
           </div>
           <div className="mb-3">
+            <label htmlFor="type" className="form-label">
+              Type
+            </label>
+            <select
+              className="form-select"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            >
+              <option value="">Select Type</option>
+              <option value="main">Main</option>
+              <option value="E_MER">E_MER</option>
+              <option value="Activities">Activities</option>
+            </select>
+          </div>
+          <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Detail
             </label>
@@ -150,7 +171,8 @@ function Post() {
                 <th scope="col">Date</th>
                 <th scope="col">Title</th>
                 <th scope="col">Pic</th>
-                <th scope="col">Detial</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Type</th>
               </tr>
             </thead>
             <tbody>
@@ -159,25 +181,28 @@ function Post() {
                   <tr key={index}>
                     <td>{new Date().toLocaleDateString()}</td>
                     <td>{post.title}</td>
-                    {/* showe link img from fireabase */}
+
                     <td>
                       <img src={post.pic} alt="pic" style={{ width: '100px' }} />
                     </td>
                     <td>{post.detail.slice(0, 10)}</td>
+                    <td>
+                      {post.type}
+                    </td>
                     <td>
                       <button
                         onClick={() => deletePost(post._id)}
                         className="btn btn-danger"
                       >
                         Delete
-                      </button>                      
+                      </button>
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
-          </div>
         </div>
+      </div>
     </div>
   );
 }

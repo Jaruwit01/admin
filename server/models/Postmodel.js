@@ -10,6 +10,14 @@ let PostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    type : {
+        type: String,
+        required: true,
+    },
+    urlpic : {
+        type: String,
+        required: true,
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Post', PostSchema);
