@@ -36,7 +36,7 @@ function Post() {
         return;
       }
 
-      const storageRef = ref(storage, `images/${pic.name}`);
+      const storageRef = ref(storage, `images_blog/${pic.name}`);
       const uploadTask = uploadBytesResumable(storageRef, pic);
   
       uploadTask.on(
@@ -124,7 +124,7 @@ function Post() {
             <label htmlFor="title" className="form-label">
               Detail
             </label>
-            <input
+            <textarea
               className="form-control"
               type="text"
               placeholder="detail"
@@ -163,7 +163,7 @@ function Post() {
                     <td>
                       <img src={post.pic} alt="pic" style={{ width: '100px' }} />
                     </td>
-                    <td>{post.detail}</td>
+                    <td>{post.detail.slice(0, 10)}</td>
                     <td>
                       <button
                         onClick={() => deletePost(post._id)}
