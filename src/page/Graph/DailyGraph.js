@@ -21,7 +21,7 @@ const DailyGraph = ({ dailyData }) => {
               type: 'bar',
             },
           ]}
-          layout={{ title: 'Data Created per Day' ,
+          layout={{ title: 'จำนวนการใช้บริการต่อวัน' ,
           width: 570, 
           height: 400, 
           }}

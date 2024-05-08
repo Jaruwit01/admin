@@ -22,7 +22,7 @@ const MonthlyGraph = ({ monthlyData }) => {
               type: 'bar',
             },
           ]}
-          layout={{ title: 'Data Created per Month', 
+          layout={{ title: 'จำนวนการใช้บริการต่อเดือน', 
           width: 570, 
           height: 400,   }}
           

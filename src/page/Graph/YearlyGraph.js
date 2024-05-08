@@ -21,7 +21,7 @@ const YearlyGraph = ({ yearlyData }) => {
               type: 'bar',
             },
           ]}
-          layout={{ title: 'Data Created per Year' ,
+          layout={{ title: 'จำนวนการใช้บริการต่อปี' ,
           width: 570, 
           height: 400,
           }}
