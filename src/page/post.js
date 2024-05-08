@@ -180,7 +180,7 @@ function Post() {
                 posts.map((post, index) => (
                   <tr key={index}>
                     <td>{new Date().toLocaleDateString()}</td>
-                    <td>{post.title}</td>
+                    <td className="text-start">{post.title}</td>
 
                     <td>
                       <img src={post.pic} alt="pic" style={{ width: '100px' }} />
