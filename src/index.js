@@ -4,6 +4,7 @@ import User from "./page/user.js";
 import Post from "./page/post.js";
 import Navbar from "./components/navbar.js";
 import Dashboard from './page/dashboard.js';
+import ResetPassword from './page/resetPassword.js';
 import Login from './page/Login';
 import {
   createBrowserRouter,
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />
+  },
+  {
+    path: "/ResetPassword/:id",
+    element: <ResetPassword />
   },
   {
     path: "/",
